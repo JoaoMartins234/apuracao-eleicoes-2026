@@ -79,6 +79,27 @@
   .status-badge.runoff { background: var(--accent2); }
   footer { text-align: center; padding: 2rem 1rem; color: var(--muted); font-size: .8rem; border-top: 1px solid var(--border); margin-top: 2rem; }
   footer a { color: var(--accent); }
+  .support {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin: 1.5rem 0;
+    text-align: center;
+  }
+  .support h3 { margin: 0 0 .5rem; color: var(--accent2); }
+  .support p { margin: .5rem 0; font-size: .9rem; }
+  .support-links { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; margin-top: .75rem; }
+  .support-links a {
+    background: #1e293b;
+    color: var(--text);
+    padding: .5rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: .85rem;
+    border: 1px solid var(--border);
+  }
+  .support-links a:hover { border-color: var(--accent); }
   .loading { text-align: center; padding: 3rem; color: var(--muted); }
   .error { background: #7f1d1d; color: #fecaca; padding: 1rem; border-radius: 8px; margin: 1rem 0; }
   .round-badge { background: var(--accent2); color: #000; padding: .2rem .6rem; border-radius: 20px; font-size: .8rem; font-weight: 700; }
@@ -126,6 +147,18 @@
   <div class="candidates" id="candidates"></div>
 
   <div id="note" style="margin-top:1.5rem;padding:1rem;background:var(--card);border-radius:8px;border:1px solid var(--border);font-size:.9rem"></div>
+
+  <div class="support">
+    <h3>Apoie este projeto</h3>
+    <p>O site é gratuito e independente. Qualquer contribuição ajuda a manter no ar e melhorar.</p>
+    <div class="support-links">
+      <a href="https://nubank.com.br/cobrar/1a2b3c" target="_blank" rel="noopener">Pix (Nubank)</a>
+      <a href="https://www.mercadolivre.com.br/" target="_blank" rel="noopener">Mercado Livre (afiliado)</a>
+      <a href="https://www.amazon.com.br/" target="_blank" rel="noopener">Amazon (afiliado)</a>
+    </div>
+    <p style="font-size:.8rem;margin-top:.75rem">Substitua os links acima pelos seus reais (chave Pix, links de afiliado etc.).</p>
+  </div>
+
   <p style="text-align:center;margin-top:1rem">
     <a href="https://resultados.tse.jus.br" target="_blank" rel="noopener" style="color:var(--accent)">Ver no site oficial do TSE →</a>
   </p>
