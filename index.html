@@ -90,7 +90,7 @@
   .support h3 { margin: 0 0 .5rem; color: var(--accent2); }
   .support p { margin: .5rem 0; font-size: .9rem; }
   .support-links { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; margin-top: .75rem; }
-  .support-links a {
+  .support-links a, .support-links button {
     background: #1e293b;
     color: var(--text);
     padding: .5rem 1rem;
@@ -98,8 +98,9 @@
     text-decoration: none;
     font-size: .85rem;
     border: 1px solid var(--border);
+    cursor: pointer;
   }
-  .support-links a:hover { border-color: var(--accent); }
+  .support-links a:hover, .support-links button:hover { border-color: var(--accent); }
   .loading { text-align: center; padding: 3rem; color: var(--muted); }
   .error { background: #7f1d1d; color: #fecaca; padding: 1rem; border-radius: 8px; margin: 1rem 0; }
   .round-badge { background: var(--accent2); color: #000; padding: .2rem .6rem; border-radius: 20px; font-size: .8rem; font-weight: 700; }
@@ -152,11 +153,11 @@
     <h3>Apoie este projeto</h3>
     <p>O site é gratuito e independente. Qualquer contribuição ajuda a manter no ar e melhorar.</p>
     <div class="support-links">
-      <a href="https://nubank.com.br/cobrar/1a2b3c" target="_blank" rel="noopener">Pix (Nubank)</a>
+      <button onclick="navigator.clipboard.writeText('23300166000129@friday.ai').then(() => alert('Chave Pix copiada!'))">Pix: 23300166000129@friday.ai</button>
       <a href="https://www.mercadolivre.com.br/afiliado/majo2311437" target="_blank" rel="noopener">Mercado Livre (afiliado)</a>
       <a href="https://www.amazon.com.br/" target="_blank" rel="noopener">Amazon (afiliado)</a>
     </div>
-    <p style="font-size:.8rem;margin-top:.75rem">Substitua os links acima pelos seus reais (chave Pix, links de afiliado etc.).</p>
+    <p style="font-size:.8rem;margin-top:.75rem">Clique no Pix para copiar a chave. Substitua os outros links se necessário.</p>
   </div>
 
   <p style="text-align:center;margin-top:1rem">
