@@ -79,7 +79,7 @@
   .status-badge.runoff { background: var(--accent2); }
   footer { text-align: center; padding: 2rem 1rem; color: var(--muted); font-size: .8rem; border-top: 1px solid var(--border); margin-top: 2rem; }
   footer a { color: var(--accent); }
-  .support {
+  .support, .projection {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 12px;
@@ -87,10 +87,12 @@
     margin: 1.5rem 0;
     text-align: center;
   }
+  .projection { border-color: #3b82f6; }
+  .projection h3 { margin: 0 0 .5rem; color: #60a5fa; }
   .support h3 { margin: 0 0 .5rem; color: var(--accent2); }
-  .support p { margin: .5rem 0; font-size: .9rem; }
+  .support p, .projection p { margin: .5rem 0; font-size: .9rem; }
   .support-links { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; margin-top: .75rem; }
-  .support-links a, .support-links button {
+  .support-links a, .support-links button, .proj-link {
     background: #1e293b;
     color: var(--text);
     padding: .5rem 1rem;
@@ -99,8 +101,10 @@
     font-size: .85rem;
     border: 1px solid var(--border);
     cursor: pointer;
+    display: inline-block;
   }
-  .support-links a:hover, .support-links button:hover { border-color: var(--accent); }
+  .proj-link { background: #1e3a8a; border-color: #3b82f6; font-weight: 600; }
+  .support-links a:hover, .support-links button:hover, .proj-link:hover { border-color: var(--accent); }
   .loading { text-align: center; padding: 3rem; color: var(--muted); }
   .error { background: #7f1d1d; color: #fecaca; padding: 1rem; border-radius: 8px; margin: 1rem 0; }
   .round-badge { background: var(--accent2); color: #000; padding: .2rem .6rem; border-radius: 20px; font-size: .8rem; font-weight: 700; }
@@ -148,6 +152,14 @@
   <div class="candidates" id="candidates"></div>
 
   <div id="note" style="margin-top:1.5rem;padding:1rem;background:var(--card);border-radius:8px;border:1px solid var(--border);font-size:.9rem"></div>
+
+  <div class="projection">
+    <h3>Projeção do resultado final</h3>
+    <p>Modelo estatístico de <strong>Rodrigo Mahlmeister</strong> que projeta o resultado final a partir dos dados parciais do TSE.<br>
+    No 1º turno acertou com apenas 2,2% das urnas apuradas.</p>
+    <a class="proj-link" href="https://projecao.2026elections.workers.dev/" target="_blank" rel="noopener">Ver projeção ao vivo →</a>
+    <p style="font-size:.8rem;margin-top:.75rem;color:var(--muted)">Independente deste site. Método e código abertos no GitHub dele.</p>
+  </div>
 
   <div class="support">
     <h3>Apoie este projeto</h3>
