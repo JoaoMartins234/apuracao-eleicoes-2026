@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Apuração Eleições 2026 — Direto do TSE</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
   :root {
     --bg: #0f1419;
@@ -45,10 +46,12 @@
     background: #22c55e; animation: pulse 1.5s infinite;
   }
   @keyframes pulse { 50% { opacity: .4; } }
-  .map-section {
+  .map-section, .charts-section {
     background: var(--card); border-radius: 12px; padding: 1rem;
     margin: 1rem 0; border: 1px solid var(--border);
   }
+  .charts-section h3 { margin: 0 0 1rem; text-align: center; }
+  .chart-container { position: relative; height: 320px; margin-bottom: 1.5rem; }
   #brazil-map { width: 100%; max-width: 500px; height: auto; display: block; margin: 0 auto; }
   #brazil-map path { fill: #334155; stroke: #0f172a; stroke-width: 1; cursor: pointer; transition: fill .2s; }
   #brazil-map a:hover path { fill: #475569 !important; }
@@ -111,6 +114,7 @@
   @media (max-width: 600px) {
     header h1 { font-size: 1.3rem; }
     .cand-pct { font-size: 1.2rem; }
+    .chart-container { height: 260px; }
   }
 </style>
 </head>
@@ -151,6 +155,16 @@
   <h2 style="margin:1.5rem 0 .75rem;font-size:1.2rem" id="titlePres">Presidente da República</h2>
   <div class="candidates" id="candidates"></div>
 
+  <div class="charts-section" id="chartsSection" style="display:none">
+    <h3>Gráficos detalhados</h3>
+    <div class="chart-container">
+      <canvas id="candChart"></canvas>
+    </div>
+    <div class="chart-container">
+      <canvas id="distChart"></canvas>
+    </div>
+  </div>
+
   <div id="note" style="margin-top:1.5rem;padding:1rem;background:var(--card);border-radius:8px;border:1px solid var(--border);font-size:.9rem"></div>
 
   <div class="projection">
@@ -189,6 +203,8 @@ const ELEC_1 = "6257";
 const ELEC_2 = "6258";
 let currentElec = ELEC_1;
 let currentUf = "br";
+let candChart = null;
+let distChart = null;
 
 function formatNumber(n) { return Number(n).toLocaleString("pt-BR"); }
 function formatPct(s) {
@@ -197,9 +213,9 @@ function formatPct(s) {
 }
 function partyColor(sigla) {
   const s = (sigla || "").toUpperCase();
-  if (s === "PL") return "pl";
-  if (s === "PT") return "pt";
-  return "other";
+  if (s === "PL") return "#1d4ed8";
+  if (s === "PT") return "#e63946";
+  return "#64748b";
 }
 
 function getUrl(elec, uf) {
@@ -314,9 +330,60 @@ function render(data, uf) {
           <div class="cand-votes">${formatNumber(c.votos)} votos</div>
         </div>
       </div>
-      <div class="bar-bg"><div class="bar-fill ${color}" style="width:${Math.min(pctNum, 100)}%"></div></div>
+      <div class="bar-bg"><div class="bar-fill" style="width:${Math.min(pctNum, 100)}%;background:${color}"></div></div>
     `;
     candEl.appendChild(div);
+  });
+
+  // Charts
+  document.getElementById("chartsSection").style.display = "block";
+  const topCands = candidates.slice(0, 5);
+  const labels = topCands.map(c => c.nome.split(" ")[0]);
+  const pcts = topCands.map(c => parseFloat(String(c.pct).replace(",", ".")) || 0);
+  const colors = topCands.map(c => partyColor(c.partido));
+
+  if (candChart) candChart.destroy();
+  candChart = new Chart(document.getElementById("candChart"), {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [{
+        label: "% dos votos válidos",
+        data: pcts,
+        backgroundColor: colors,
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, max: 100, ticks: { color: "#8b9bb0" }, grid: { color: "#2a3441" } },
+        x: { ticks: { color: "#e8eef4" }, grid: { display: false } }
+      }
+    }
+  });
+
+  const valid = Number(v.vvc || v.vv || 0);
+  const blank = Number(v.vb || 0);
+  const nulls = Number(v.vn || 0);
+  if (distChart) distChart.destroy();
+  distChart = new Chart(document.getElementById("distChart"), {
+    type: "doughnut",
+    data: {
+      labels: ["Válidos", "Brancos", "Nulos"],
+      datasets: [{
+        data: [valid, blank, nulls],
+        backgroundColor: ["#22c55e", "#f59e0b", "#64748b"],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { position: "bottom", labels: { color: "#e8eef4" } } }
+    }
   });
 
   const note = document.getElementById("note");
