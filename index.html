@@ -46,11 +46,16 @@
     background: #22c55e; animation: pulse 1.5s infinite;
   }
   @keyframes pulse { 50% { opacity: .4; } }
-  .map-section, .charts-section {
+  .map-section, .charts-section, .uf-section {
     background: var(--card); border-radius: 12px; padding: 1rem;
     margin: 1rem 0; border: 1px solid var(--border);
   }
-  .charts-section h3 { margin: 0 0 1rem; text-align: center; }
+  .uf-section select {
+    width: 100%; max-width: 300px; padding: .5rem; border-radius: 6px;
+    background: #1e293b; color: var(--text); border: 1px solid var(--border);
+    font-size: 1rem; margin: .5rem auto; display: block;
+  }
+  .charts-section h3, .uf-section h3 { margin: 0 0 1rem; text-align: center; }
   .chart-container { position: relative; height: 320px; margin-bottom: 1.5rem; }
   #brazil-map { width: 100%; max-width: 500px; height: auto; display: block; margin: 0 auto; }
   #brazil-map path { fill: #334155; stroke: #0f172a; stroke-width: 1; cursor: pointer; transition: fill .2s; }
@@ -75,9 +80,6 @@
   .cand-votes { font-size: .85rem; color: var(--muted); }
   .bar-bg { height: 8px; background: #2a3441; border-radius: 4px; margin-top: .5rem; }
   .bar-fill { height: 100%; border-radius: 4px; width: 0%; transition: width .8s ease; }
-  .bar-fill.pl { background: #1d4ed8; }
-  .bar-fill.pt { background: #e63946; }
-  .bar-fill.other { background: #64748b; }
   .status-badge { position: absolute; top: .5rem; right: .5rem; background: #22c55e; color: #000; font-size: .7rem; font-weight: 700; padding: .15rem .4rem; border-radius: 4px; }
   .status-badge.runoff { background: var(--accent2); }
   footer { text-align: center; padding: 2rem 1rem; color: var(--muted); font-size: .8rem; border-top: 1px solid var(--border); margin-top: 2rem; }
@@ -131,10 +133,44 @@
     <div id="updateTime">—</div>
   </div>
 
+  <div class="uf-section">
+    <h3>Comparar por estado</h3>
+    <select id="ufSelect" onchange="loadData(this.value)">
+      <option value="br">Brasil (nacional)</option>
+      <option value="ac">Acre</option>
+      <option value="al">Alagoas</option>
+      <option value="am">Amazonas</option>
+      <option value="ap">Amapá</option>
+      <option value="ba">Bahia</option>
+      <option value="ce">Ceará</option>
+      <option value="df">Distrito Federal</option>
+      <option value="es">Espírito Santo</option>
+      <option value="go">Goiás</option>
+      <option value="ma">Maranhão</option>
+      <option value="mg">Minas Gerais</option>
+      <option value="ms">Mato Grosso do Sul</option>
+      <option value="mt">Mato Grosso</option>
+      <option value="pa">Pará</option>
+      <option value="pb">Paraíba</option>
+      <option value="pe">Pernambuco</option>
+      <option value="pi">Piauí</option>
+      <option value="pr">Paraná</option>
+      <option value="rj">Rio de Janeiro</option>
+      <option value="rn">Rio Grande do Norte</option>
+      <option value="ro">Rondônia</option>
+      <option value="rr">Roraima</option>
+      <option value="rs">Rio Grande do Sul</option>
+      <option value="sc">Santa Catarina</option>
+      <option value="se">Sergipe</option>
+      <option value="sp">São Paulo</option>
+      <option value="to">Tocantins</option>
+    </select>
+    <p style="text-align:center;font-size:.85rem;color:var(--muted);margin:0">Selecione um estado para ver os resultados locais</p>
+  </div>
+
   <div class="map-section">
-    <h3 style="margin:0 0 .5rem;text-align:center">Mapa do Brasil — clique em um estado</h3>
-    <p style="text-align:center;font-size:.85rem;color:var(--muted);margin:0 0 1rem">Mostra o resultado de Presidente no estado (azul = PL, vermelho = PT)</p>
-    <p style="text-align:center;color:var(--muted)">[Mapa SVG interativo incluído na versão local completa]</p>
+    <h3 style="margin:0 0 .5rem;text-align:center">Mapa do Brasil</h3>
+    <p style="text-align:center;font-size:.85rem;color:var(--muted);margin:0 0 1rem">Resultados por estado (use o seletor acima)</p>
   </div>
 
   <div id="content">
@@ -194,7 +230,7 @@
 <footer>
   Dados oficiais do <a href="https://resultados.tse.jus.br" target="_blank" rel="noopener">Tribunal Superior Eleitoral (TSE)</a>.<br>
   Atualização automática. Não é uma projeção — são os números publicados pelo TSE.<br>
-  <small>2º turno em 25 de outubro de 2026 · Mapa interativo</small>
+  <small>2º turno em 25 de outubro de 2026</small>
 </footer>
 
 <script>
